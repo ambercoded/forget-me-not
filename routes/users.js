@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-// when creating routes, we dont do "app." anymore, but use router
+// when creating routes, we dont do "app." anymore, but use "router"
 
 // @route     POST api/users
 // @desc      Register a user
