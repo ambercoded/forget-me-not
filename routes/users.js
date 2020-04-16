@@ -1,5 +1,7 @@
 const express = require("express");
 const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const config = require("config");
 const router = express.Router();
 const { check, validationResult } = require("express-validator");
 
@@ -56,8 +58,26 @@ router.post(
       // save the new user to the database
       await user.save();
 
+      // define what we want to send back to the userin the auth token. we only need to send the user id bc that's enough to identify which contacts should be shown to the user after login
+      const payload = {
+        user: {
+          id: user.id,
+        },
+      };
+
       // send back a json auth token to the user
-      res.send("User saved");
+      jwt.sign(
+        payload,
+        config.get("jwtSecret"),
+        {
+          expiresIn: 360000,
+        },
+        // callback function that is called after the token has been signed
+        (err, token) => {
+          if (err) throw err; // if it goes wrong, throw error
+          res.json({ token }); // if it works, send the token
+        }
+      );
     } catch (err) {
       console.error(err.message);
       res.status(500).send("Server error");
