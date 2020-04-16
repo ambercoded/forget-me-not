@@ -7,6 +7,9 @@ const app = express();
 // Connect Database
 connectDB();
 
+// init middleware
+app.use(express.json({ extended: false })); // allows us to accept bodydata (to use the entered information in the register form .e.g.)
+
 app.get("/", (req, res) =>
   res.json({ msg: "Welcome to the Forget-Me-Not API" })
 );
