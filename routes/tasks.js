@@ -1,15 +1,26 @@
 // CRUD functionality and some reference which task belongs to which user
-
+const { check, validationResult } = require("express-validator");
+const auth = require("../middleware/auth");
 const express = require("express");
 const router = express.Router();
+
+const User = require("../models/User");
+const Task = require("../models/Task");
 
 // when creating routes, we dont do "app." anymore, but use router
 
 // @route     GET api/tasks
 // @desc      Get list of the user's tasks
 // @access    Private
-router.get("/", (req, res) => {
-  res.send("Getting the tasks of the logged in user");
+router.get("/", auth, async (req, res) => {
+  // Pull all tasks for the given user from our database.
+  try {
+    const tasks = await Task.find({ user: req.user.id });
+    res.json(tasks);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server error");
+  }
 });
 
 // @route     POST api/tasks
