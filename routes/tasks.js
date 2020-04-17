@@ -27,7 +27,7 @@ router.get("/", auth, async (req, res) => {
 // @desc      Add a task
 // @access    Private
 router.post(
-  "/",
+  "/:id ",
   [
     auth,
     [
@@ -76,15 +76,65 @@ router.post(
 // @route     PUT api/tasks/:id
 // @desc      Update a task
 // @access    Private
-router.put("/:id", (req, res) => {
-  res.send("Updating a task");
+router.put("/:id", auth, async (req, res) => {
+  // get user input
+  const { name, quantity, reward, isDone } = req.body;
+
+  // Build task object
+  const taskFields = {};
+  if (name) taskFields.name = name;
+  if (quantity) taskFields.quantity = quantity;
+  if (reward) taskFields.reward = reward;
+  if (isDone) taskFields.isDone = isDone;
+
+  try {
+    let task = await Task.findById(req.params.id);
+
+    if (!task)
+      return res.status(404).send("no task with that id could be found");
+
+    // make sure user owns the specified task
+    if (task.user.toString() !== req.user.id)
+      return res.status(401).json({ msg: "Not authorized to edit this task." });
+
+    // update the task in the db
+    task = await Task.findByIdAndUpdate(
+      req.params.id,
+      { $set: taskFields },
+      { new: true }
+    ); // if task doesnt exist, just create it
+
+    res.json(task);
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server error");
+  }
 });
 
 // @route     DELETE api/tasks/:id
 // @desc      Delete a user's task
 // @access    Private
-router.delete("/:id", (req, res) => {
-  res.send("Delete a task");
+router.delete("/:id", auth, async (req, res) => {
+  try {
+    let task = await Task.findById(req.params.id);
+
+    if (!task)
+      return res.status(404).send("No task with that id could be found");
+
+    // make sure user owns the specified task
+    if (task.user.toString() !== req.user.id)
+      return res
+        .status(401)
+        .json({ msg: "Not authorized to delete this task." });
+
+    // delete the task from the db
+    await Task.findByIdAndRemove(req.params.id);
+
+    res.json({ msg: "Task removed" });
+  } catch (err) {
+    console.error(err.message);
+    res.status(500).send("Server error");
+  }
 });
 
 module.exports = router;
