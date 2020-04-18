@@ -19,33 +19,42 @@ const TaskItem = ({ task }) => {
     setChangedTask({ ...changedTask, [e.target.name]: e.target.value });
   };
 
-  const onSaveChanges = (e) => {
+  const onSubmit = (e) => {
     setEditMode(false);
     updateTask(changedTask);
+  };
+
+  const onDone = (e) => {
+    // give Points to the user who finished the task
+    deleteTask(id);
   };
 
   if (editMode) {
     return (
       <Fragment>
         <div className="card container">
-          <input
-            type="text"
-            name="name"
-            value={changedTask.name}
-            onChange={onChange}
-          />
-          <input
-            type="text"
-            name="reward"
-            value={changedTask.reward}
-            onChange={onChange}
-          />
-          <button className="btn" onClick={() => setEditMode(false)}>
-            Cancel
-          </button>
-          <button className="btn btn-primary" onClick={() => onSaveChanges()}>
-            <i className="fas fa-check"></i> Save changes
-          </button>
+          <form onSubmit={onSubmit}>
+            <input
+              type="text"
+              name="name"
+              value={changedTask.name}
+              onChange={onChange}
+            />
+            <input
+              type="text"
+              name="reward"
+              value={changedTask.reward}
+              onChange={onChange}
+            />
+            <input
+              type="submit"
+              value="Save changes"
+              className="btn btn-primary"
+            />
+            <button className="btn" onClick={() => setEditMode(false)}>
+              Cancel
+            </button>
+          </form>
         </div>
       </Fragment>
     );
@@ -57,7 +66,7 @@ const TaskItem = ({ task }) => {
         <h3 className="text-primary text-left">{name}</h3>
         <span className="badge">+ {reward} coins</span>
         <span style={{ float: "right" }}>
-          <button className="btn btn-success">
+          <button className="btn btn-success" onClick={onDone}>
             Done <i className="fas fa-check"></i>
           </button>
           <button className="btn" onClick={() => setEditMode(true)}>

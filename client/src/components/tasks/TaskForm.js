@@ -20,33 +20,36 @@ const TaskForm = () => {
   const onSubmit = (e) => {
     e.preventDefault();
     taskContext.addTask(task); // pass in our state (all of our form fields)
+    setTask({ name: "", isDone: false, reward: "" });
   };
 
   return (
-    <form onSubmit={onSubmit}>
-      <h2 className="text-primary">Add Task</h2>
-      <input
-        type="text"
-        placeholder="task name"
-        name="name"
-        value={name}
-        onChange={onChange}
-      />
-      <input
-        type="text"
-        placeholder="number of coins as a reward (e.g. 30)"
-        name="reward"
-        value={reward}
-        onChange={onChange}
-      />
-      <div>
+    <div className="card">
+      <form onSubmit={onSubmit}>
+        <h2 className="text-primary">Add Task</h2>
         <input
-          type="submit"
-          value="Add Task"
-          className="btn btn-primary btn-block"
+          type="text"
+          placeholder="task name"
+          name="name"
+          value={name}
+          onChange={onChange}
         />
-      </div>
-    </form>
+        <input
+          type="text"
+          placeholder="number of coins as a reward (e.g. 30)"
+          name="reward"
+          value={reward}
+          onChange={onChange}
+        />
+        <div>
+          <input
+            type="submit"
+            value="Add Task"
+            className="btn btn-primary btn-block"
+          />
+        </div>
+      </form>
+    </div>
   );
 };
 
