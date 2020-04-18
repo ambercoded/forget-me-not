@@ -2,7 +2,7 @@ import React, { Fragment } from "react";
 import PropTypes from "prop-types";
 
 const TaskItem = ({ task }) => {
-  const { id, name, reward, quantity, isDone } = task;
+  const { id, name, reward, isDone } = task;
 
   return (
     <Fragment>

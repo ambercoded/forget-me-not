@@ -1,5 +1,5 @@
 import React, { useReducer } from "react";
-import uuid from "uuid";
+import uuid from "uuid/v4";
 import TaskContext from "./taskContext";
 import taskReducer from "./taskReducer";
 import {
@@ -43,6 +43,11 @@ const TaskState = (props) => {
   const [state, dispatch] = useReducer(taskReducer, initialState);
 
   // add task
+  const addTask = (task) => {
+    // for now, generate a random id
+    task.id = uuid();
+    dispatch({ type: ADD_TASK, payload: task });
+  };
 
   // delete task
 
@@ -62,6 +67,7 @@ const TaskState = (props) => {
     <TaskContext.Provider
       value={{
         tasks: state.tasks,
+        addTask,
       }}
     >
       {props.children}

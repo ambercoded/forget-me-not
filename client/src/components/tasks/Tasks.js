@@ -12,11 +12,6 @@ const Tasks = () => {
       {tasks.map((task) => {
         return <TaskItem task={task} key={task.id}></TaskItem>;
       })}
-      <div className="text-center">
-        <button className="btn btn-primary">
-          <i className="fas fa-plus"></i>Add a new task
-        </button>
-      </div>
     </Fragment>
   );
 };
