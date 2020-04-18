@@ -17,21 +17,21 @@ const TaskState = (props) => {
     tasks: [
       {
         id: 1,
-        name: "do laundry",
+        name: "Wäsche waschen",
         reward: 50,
         isDone: false,
         quantity: 1,
       },
       {
         id: 2,
-        name: "do groceries (14 articles)",
+        name: "Einkaufen gehen (14 Artikel)",
         reward: 140,
         isDone: false,
         quantity: 1,
       },
       {
         id: 3,
-        name: "vacuum",
+        name: "Die Wohnung saugen",
         reward: 100,
         isDone: false,
         quantity: 1,
