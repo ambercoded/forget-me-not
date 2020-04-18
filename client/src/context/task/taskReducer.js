@@ -15,6 +15,12 @@ export default (state, action) => {
         ...state,
         tasks: [...state.tasks, action.payload],
       };
+    case DELETE_TASK:
+      return {
+        ...state,
+        // filter array to be only all tasks that are NOT equal to the id in the payload
+        tasks: state.tasks.filter((task) => task.id !== action.payload),
+      };
 
     default:
       return state;

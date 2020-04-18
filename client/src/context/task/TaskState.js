@@ -50,6 +50,9 @@ const TaskState = (props) => {
   };
 
   // delete task
+  const deleteTask = (id) => {
+    dispatch({ type: DELETE_TASK, payload: id });
+  };
 
   // update task
 
@@ -68,6 +71,7 @@ const TaskState = (props) => {
       value={{
         tasks: state.tasks,
         addTask,
+        deleteTask,
       }}
     >
       {props.children}

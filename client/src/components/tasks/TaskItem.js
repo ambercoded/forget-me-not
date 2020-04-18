@@ -1,8 +1,15 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useContext } from "react";
 import PropTypes from "prop-types";
+import TaskContext from "../../context/task/taskContext";
 
 const TaskItem = ({ task }) => {
+  const taskContext = useContext(TaskContext);
+
   const { id, name, reward, isDone } = task;
+
+  const onDelete = (e) => {
+    taskContext.deleteTask(id);
+  };
 
   return (
     <Fragment>
@@ -15,6 +22,9 @@ const TaskItem = ({ task }) => {
           </button>
           <button className="btn">
             <i className="fas fa-pen"></i>
+          </button>
+          <button className="btn" onClick={onDelete}>
+            <i className="fas fa-trash"></i>
           </button>
         </span>
       </div>
