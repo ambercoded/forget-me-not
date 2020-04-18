@@ -37,6 +37,7 @@ const TaskState = (props) => {
         quantity: 1,
       },
     ],
+    current: null,
   };
 
   // state allows us to access anything in our state. dispatch allows us to dispatch objects to our reducer
@@ -55,10 +56,19 @@ const TaskState = (props) => {
   };
 
   // update task
+  const updateTask = (task) => {
+    dispatch({ type: UPDATE_TASK, payload: task });
+  };
 
   // set current task
+  const setCurrent = (task) => {
+    dispatch({ type: SET_CURRENT, payload: task });
+  };
 
   // clear current task
+  const clearCurrent = () => {
+    dispatch({ type: CLEAR_CURRENT });
+  };
 
   // filter tasks
 
@@ -70,8 +80,12 @@ const TaskState = (props) => {
     <TaskContext.Provider
       value={{
         tasks: state.tasks,
+        current: state.current,
         addTask,
+        updateTask,
         deleteTask,
+        setCurrent,
+        clearCurrent,
       }}
     >
       {props.children}

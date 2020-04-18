@@ -33,8 +33,8 @@ const TaskForm = () => {
         onChange={onChange}
       />
       <input
-        type="number"
-        placeholder="number of coins as a reward"
+        type="text"
+        placeholder="number of coins as a reward (e.g. 30)"
         name="reward"
         value={reward}
         onChange={onChange}
