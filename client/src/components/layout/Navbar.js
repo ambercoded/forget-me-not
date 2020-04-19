@@ -1,8 +1,13 @@
-import React from "react";
+import React, { useContext } from "react";
 import PropTypes from "prop-types";
 import { Link } from "react-router-dom";
 
+import RewardsContext from "../../context/rewards/rewardsContext";
+
 const Navbar = ({ title, icon }) => {
+  const rewardsContext = useContext(RewardsContext);
+  const { coins } = rewardsContext;
+
   return (
     <div className="navbar bg-primary">
       <h1>
@@ -17,7 +22,7 @@ const Navbar = ({ title, icon }) => {
           <Link to="/shopping-list">Shopping List</Link>
         </li>
         <li>
-          <Link to="/rewards">Rewards (874 coins)</Link>
+          <Link to="/rewards">Rewards ({coins} coins)</Link>
         </li>
       </ul>
     </div>

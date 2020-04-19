@@ -4,8 +4,8 @@ import {
   SET_CURRENT,
   CLEAR_CURRENT,
   UPDATE_TASK,
-  FILTER_TASK,
-  CLEAR_FILTER,
+  // FILTER_TASK,
+  // CLEAR_FILTER,
 } from "../types";
 
 export default (state, action) => {

@@ -7,6 +7,14 @@ const Tasks = () => {
 
   const { tasks } = taskContext;
 
+  if (tasks.length === 0) {
+    return (
+      <h4 className="text-center my-3">
+        No tasks? Go ahead and add your first task.
+      </h4>
+    );
+  }
+
   return (
     <Fragment>
       {tasks.map((task) => {
