@@ -2,6 +2,55 @@ import React, { Fragment, useContext, useState } from "react";
 import PropTypes from "prop-types";
 import TaskContext from "../../context/task/taskContext";
 import RewardsContext from "../../context/rewards/rewardsContext";
+import styled from "styled-components";
+
+const Card = styled.div`
+  /* border: 1px solid black; */
+  /* background: lightblue; */
+  display: flex;
+  flex-direction: row;
+  margin: 8px 0px;
+  border-radius: 8px;
+  /* box-shadow: 0 0px 8px 0 rgba(0, 0, 0, 0.2); */
+  transition: 0.3s;
+  /* &:hover {
+    box-shadow: 0 0px 16px 0 rgba(0, 0, 0, 0.2);
+  } */
+`;
+
+const Chip = styled.span`
+  border-radius: 16px;
+  background: limegreen;
+  padding: 4px 16px;
+  font-size: 14px;
+  color: white;
+`;
+
+const ContainerRow = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
+
+const Button = styled.button`
+  padding: 8px;
+  width: 48px;
+  height: 48px;
+  border-radius: 8px;
+  background: transparent;
+  border: none;
+  &:hover {
+    background: lightblue;
+  }
+`;
+
+const H4 = styled.h4`
+  margin: 8px;
+  color: black;
+`;
+
+const HR = styled.hr`
+  border: 0.5px solid lightgray;
+`;
 
 const TaskItem = ({ task }) => {
   const [editMode, setEditMode] = useState(false);
@@ -55,15 +104,19 @@ const TaskItem = ({ task }) => {
   if (editMode) {
     return (
       <Fragment>
-        <div className="card container">
+        <Card>
           <form onSubmit={onSubmit}>
+            <label htmlFor="taskName">Task name</label>
             <input
+              id="taskName"
               type="text"
               name="name"
               value={changedTask.name}
               onChange={onChange}
             />
+            <label htmlFor="reward">Coins as a reward</label>
             <input
+              id="reward"
               type="text"
               name="reward"
               value={changedTask.reward || 0}
@@ -81,29 +134,32 @@ const TaskItem = ({ task }) => {
             >
               Cancel
             </button>
+            <button className="btn" onClick={onDelete}>
+              <i className="fas fa-trash"></i>
+            </button>
           </form>
-        </div>
+        </Card>
       </Fragment>
     );
   }
 
   return (
     <Fragment>
-      <div className="card container">
-        <h3 className="text-primary text-left">{name}</h3>
-        <span className="badge">+ {reward} coins</span>
-        <span style={{ float: "right" }}>
-          <button className="btn btn-success" onClick={onDone}>
-            Done <i className="fas fa-check"></i>
-          </button>
-          <button className="btn" onClick={() => setEditMode(true)}>
+      <Card>
+        <ContainerRow style={{ marginRight: "auto" }}>
+          <Button onClick={onDone}>
+            <i className="far fa-square"></i>
+          </Button>
+          <H4 className="text-primary text-left">{name}</H4>
+        </ContainerRow>
+        <div style={{ marginLeft: "auto" }}>
+          <Chip>+ {reward} coins</Chip>
+          <Button onClick={() => setEditMode(true)}>
             <i className="fas fa-pen"></i>
-          </button>
-          <button className="btn" onClick={onDelete}>
-            <i className="fas fa-trash"></i>
-          </button>
-        </span>
-      </div>
+          </Button>
+        </div>
+      </Card>
+      <HR />
     </Fragment>
   );
 };

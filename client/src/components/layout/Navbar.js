@@ -36,7 +36,7 @@ Navbar.propTypes = {
 
 Navbar.defaultProps = {
   title: "Forget-Me-Not",
-  icon: "fas fa-id-card-alt",
+  icon: "far fa-gem",
 };
 
 export default Navbar;

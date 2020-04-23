@@ -7,7 +7,7 @@ const TaskForm = () => {
   const [task, setTask] = useState({
     name: "",
     isDone: false,
-    reward: 0,
+    reward: 10,
   });
 
   const { name, reward } = task;
@@ -30,21 +30,25 @@ const TaskForm = () => {
   const onSubmit = (e) => {
     e.preventDefault();
     taskContext.addTask(task); // pass in our state (all of our form fields)
-    setTask({ name: "", isDone: false, reward: 0 });
+    setTask({ name: "", isDone: false, reward: 10 });
   };
 
   return (
     <div className="card">
       <form onSubmit={onSubmit}>
         <h2 className="text-primary">Add Task</h2>
+        <label htmlFor="taskname">Task name</label>
         <input
+          id="taskname"
           type="text"
-          placeholder="task name"
+          placeholder="What needs to be done?"
           name="name"
           value={name}
           onChange={onChange}
         />
+        <label htmlFor="reward">Coins as a reward</label>
         <input
+          id="reward"
           type="text"
           placeholder="number of coins as a reward (e.g. 30)"
           name="reward"

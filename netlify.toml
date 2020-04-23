@@ -1,0 +1,5 @@
+[build]
+  publish="build"
+  base = "client"
+  # publish = "subDirectory/dist/"
+  command = "npm run build"
