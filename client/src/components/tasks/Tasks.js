@@ -19,7 +19,7 @@ const Tasks = () => {
     <Fragment>
       {tasks.map((task) => {
         if (!task.isDone)
-          return <TaskItem task={task} key={task.id}></TaskItem>;
+          return <TaskItem originalTask={task} key={task.id}></TaskItem>;
       })}
     </Fragment>
   );

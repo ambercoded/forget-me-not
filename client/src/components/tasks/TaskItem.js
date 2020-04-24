@@ -1,74 +1,74 @@
-import React, { Fragment, useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import TaskContext from "../../context/task/taskContext";
 import RewardsContext from "../../context/rewards/rewardsContext";
 import { Card, ContainerRow, Button, H4, Chip, HR } from "../../styles";
 
-const TaskItem = ({ task }) => {
+const TaskItem = ({ originalTask }) => {
+  const [task, setTask] = useState(originalTask);
+  const [draftTask, setDraftTask] = useState(task);
   const [editMode, setEditMode] = useState(false);
-  const [changedTask, setChangedTask] = useState(task);
+  const { deleteTask, updateTask } = useContext(TaskContext);
+  const { addCoins, removeCoins } = useContext(RewardsContext);
+  const { id, name, reward } = originalTask;
 
-  const taskContext = useContext(TaskContext);
-  const { deleteTask, updateTask } = taskContext;
-
-  const rewardsContext = useContext(RewardsContext);
-  const { addCoins, removeCoins } = rewardsContext;
-
-  const { id, name, reward } = task;
+  useEffect(() => {
+    updateTask(task);
+    return () => {
+      // cleanup necessary?
+    };
+  }, [task]);
 
   const onDelete = (e) => {
     deleteTask(id);
   };
 
+  // editmode eventhandler
   const onChange = (e) => {
-    setChangedTask({ ...changedTask, [e.target.name]: e.target.value });
+    setDraftTask({ ...draftTask, [e.target.name]: e.target.value });
   };
 
+  // editmode eventhandler for numerical input fields
   const onChangeNumberInput = (e) => {
     if (isNaN(e.target.value)) {
       // on older browsers, input type "number" might not be supported and strings or an empty string might be entered. this way any invalid number is saved as a 0.
-      setChangedTask({ ...changedTask, [e.target.name]: 0 });
+      setDraftTask({ ...draftTask, [e.target.name]: 0 });
     } else {
-      setChangedTask({
-        ...changedTask,
+      setDraftTask({
+        ...draftTask,
         [e.target.name]: parseInt(e.target.value),
       });
     }
   };
 
-  const onSubmit = (e) => {
+  const onSaveChanges = (e) => {
     e.preventDefault();
     setEditMode(false);
-    updateTask(changedTask);
+    setTask(draftTask);
   };
 
-  const onDone = (e) => {
+  const markAsDone = (e) => {
     // todo: make sure that the points are added only to the user who is logged in and not to a global score
     addCoins(reward);
-
-    // PROBLEMATIC RACE CONDITION. updateTask should only be called after the the changedState has been set. Right now, I have to click on a task's checkbox twice, to make sure that it rerenders after the state has been changed.
-    // How can I avoid this? I thought about calling "updateTask" with the useEffect hook and adding "changedTask" to the dependencies array. However, i change "changedTask" everytime a user is typing something in editmode. Thus, updateTask would called whenever a using is typing. Theoretically i would just need a callback function that is called after "setChangedTask" has completed. I also thought about async/await. Hm. how should i go about this?
-    setChangedTask({ ...changedTask, isDone: true });
-    updateTask(changedTask);
+    setTask({ ...task, isDone: true });
   };
 
-  const onUndo = (e) => {
+  const markAsUndone = (e) => {
     removeCoins(reward);
-    setChangedTask({ ...changedTask, isDone: false });
-    updateTask(changedTask);
+    setTask({ ...task, isDone: false });
   };
 
   if (editMode) {
     return (
-      <Fragment>
-        <form onSubmit={onSubmit}>
+      <>
+        <form onSubmit={onSaveChanges}>
           <ContainerRow>
             {/* <label htmlFor="taskName">Task name</label> */}
             <input
               id="taskName"
               type="text"
               name="name"
-              value={changedTask.name}
+              value={draftTask.name}
               onChange={onChange}
             />
             {/* <label htmlFor="reward">Coins as a reward</label> */}
@@ -76,7 +76,7 @@ const TaskItem = ({ task }) => {
               id="reward"
               type="text"
               name="reward"
-              value={changedTask.reward || 0}
+              value={draftTask.reward || 0}
               onChange={onChangeNumberInput}
               style={{ width: "10vw" }}
             />
@@ -97,16 +97,16 @@ const TaskItem = ({ task }) => {
             </Button>
           </ContainerRow>
         </form>
-      </Fragment>
+      </>
     );
   }
 
-  if (task.isDone) {
+  if (originalTask.isDone) {
     return (
-      <Fragment>
+      <>
         <Card>
           <ContainerRow style={{ marginRight: "auto" }}>
-            <Button onClick={onUndo}>
+            <Button onClick={markAsUndone}>
               <i
                 className="far fa-check-square"
                 style={{ color: "lightgray" }}
@@ -121,15 +121,15 @@ const TaskItem = ({ task }) => {
           </ContainerRow>
         </Card>
         <HR />
-      </Fragment>
+      </>
     );
   }
 
   return (
-    <Fragment>
+    <>
       <Card>
         <ContainerRow style={{ marginRight: "auto" }}>
-          <Button onClick={onDone}>
+          <Button onClick={markAsDone}>
             <i className="far fa-square"></i>
           </Button>
           <H4 className="text-primary text-left">{name}</H4>
@@ -142,12 +142,12 @@ const TaskItem = ({ task }) => {
         </div>
       </Card>
       <HR />
-    </Fragment>
+    </>
   );
 };
 
 TaskItem.propTypes = {
-  task: PropTypes.object.isRequired,
+  originalTask: PropTypes.object.isRequired,
 };
 
 export default TaskItem;
