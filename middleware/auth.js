@@ -1,7 +1,7 @@
 // this middleware will be used on all routes that shall not be publicly available and require authentification
 
 const jwt = require("jsonwebtoken");
-const config = require("config");
+require("dotenv").config();
 
 // export this function
 module.exports = function (req, res, next) {
@@ -15,7 +15,7 @@ module.exports = function (req, res, next) {
 
   try {
     // after verification, the payload gets put into the variable "decoded"
-    const decoded = jwt.verify(token, config.get("jwtSecret"));
+    const decoded = jwt.verify(token, process.env.JWTSECRET);
 
     // retrieve the user object from the payload
     // make the "user" accessible inside of the route by saving the decoded user info in the req.user object
