@@ -46,7 +46,8 @@ const TaskItem = ({ task }) => {
     // todo: make sure that the points are added only to the user who is logged in and not to a global score
     addCoins(reward);
 
-    // PROBLEMATIC RACE CONDITION. updateTask should only be called after the the changedState has been set.
+    // PROBLEMATIC RACE CONDITION. updateTask should only be called after the the changedState has been set. Right now, I have to click on a task's checkbox twice, to make sure that it rerenders after the state has been changed.
+    // How can I avoid this? I thought about calling "updateTask" with the useEffect hook and adding "changedTask" to the dependencies array. However, i change "changedTask" everytime a user is typing something in editmode. Thus, updateTask would called whenever a using is typing. Theoretically i would just need a callback function that is called after "setChangedTask" has completed. I also thought about async/await. Hm. how should i go about this?
     setChangedTask({ ...changedTask, isDone: true });
     updateTask(changedTask);
   };
