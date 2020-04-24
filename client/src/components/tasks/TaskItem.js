@@ -26,10 +26,8 @@ const TaskItem = ({ task }) => {
 
   const onChangeNumberInput = (e) => {
     if (isNaN(e.target.value)) {
-      e.target.value.toString();
-      // on older browsers, input type number might not be supported and strings might be entered. as a fallback just set the reward to 0 for now)
+      // on older browsers, input type "number" might not be supported and strings or an empty string might be entered. this way any invalid number is saved as a 0.
       setChangedTask({ ...changedTask, [e.target.name]: 0 });
-      // TODO: show a form validation error client-side (only necessary in older browsers that dont implement input type "number")
     } else {
       setChangedTask({
         ...changedTask,
@@ -45,13 +43,10 @@ const TaskItem = ({ task }) => {
   };
 
   const onDone = (e) => {
-    // give Points to the user who finished the task
     // todo: make sure that the points are added only to the user who is logged in and not to a global score
     addCoins(reward);
 
-    // todo: instead of deleting, move the task to an archive (setIsDone to true and only display tasks in the tasks list that have "isDone" = false). on the archive only show the ones with isDone = true.
-    // deleteTask(id);
-
+    // PROBLEMATIC RACE CONDITION. updateTask should only be called after the the changedState has been set.
     setChangedTask({ ...changedTask, isDone: true });
     updateTask(changedTask);
   };
