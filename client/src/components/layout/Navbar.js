@@ -10,10 +10,10 @@ const Navbar = ({ title, icon }) => {
 
   return (
     <div className="navbar bg-primary">
-      <h1>
+      <h3>
         <i className={icon} />
-        {title}
-      </h1>
+        {" " + title}
+      </h3>
       <ul>
         <li>
           <Link to="/">Tasks</Link>

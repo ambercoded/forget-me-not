@@ -2,55 +2,7 @@ import React, { Fragment, useContext, useState } from "react";
 import PropTypes from "prop-types";
 import TaskContext from "../../context/task/taskContext";
 import RewardsContext from "../../context/rewards/rewardsContext";
-import styled from "styled-components";
-
-const Card = styled.div`
-  /* border: 1px solid black; */
-  /* background: lightblue; */
-  display: flex;
-  flex-direction: row;
-  margin: 8px 0px;
-  border-radius: 8px;
-  /* box-shadow: 0 0px 8px 0 rgba(0, 0, 0, 0.2); */
-  transition: 0.3s;
-  /* &:hover {
-    box-shadow: 0 0px 16px 0 rgba(0, 0, 0, 0.2);
-  } */
-`;
-
-const Chip = styled.span`
-  border-radius: 16px;
-  background: limegreen;
-  padding: 4px 16px;
-  font-size: 14px;
-  color: white;
-`;
-
-const ContainerRow = styled.div`
-  display: flex;
-  flex-direction: row;
-`;
-
-const Button = styled.button`
-  padding: 8px;
-  width: 48px;
-  height: 48px;
-  border-radius: 8px;
-  background: transparent;
-  border: none;
-  &:hover {
-    background: lightblue;
-  }
-`;
-
-const H4 = styled.h4`
-  margin: 8px;
-  color: black;
-`;
-
-const HR = styled.hr`
-  border: 0.5px solid lightgray;
-`;
+import { Card, ContainerRow, Button, H4, Chip, HR } from "../../styles";
 
 const TaskItem = ({ task }) => {
   const [editMode, setEditMode] = useState(false);
@@ -60,7 +12,7 @@ const TaskItem = ({ task }) => {
   const { deleteTask, updateTask } = taskContext;
 
   const rewardsContext = useContext(RewardsContext);
-  const { addCoins } = rewardsContext;
+  const { addCoins, removeCoins } = rewardsContext;
 
   const { id, name, reward } = task;
 
@@ -98,15 +50,24 @@ const TaskItem = ({ task }) => {
     addCoins(reward);
 
     // todo: instead of deleting, move the task to an archive (setIsDone to true and only display tasks in the tasks list that have "isDone" = false). on the archive only show the ones with isDone = true.
-    deleteTask(id);
+    // deleteTask(id);
+
+    setChangedTask({ ...changedTask, isDone: true });
+    updateTask(changedTask);
+  };
+
+  const onUndo = (e) => {
+    removeCoins(reward);
+    setChangedTask({ ...changedTask, isDone: false });
+    updateTask(changedTask);
   };
 
   if (editMode) {
     return (
       <Fragment>
-        <Card>
-          <form onSubmit={onSubmit}>
-            <label htmlFor="taskName">Task name</label>
+        <form onSubmit={onSubmit}>
+          <ContainerRow>
+            {/* <label htmlFor="taskName">Task name</label> */}
             <input
               id="taskName"
               type="text"
@@ -114,31 +75,56 @@ const TaskItem = ({ task }) => {
               value={changedTask.name}
               onChange={onChange}
             />
-            <label htmlFor="reward">Coins as a reward</label>
+            {/* <label htmlFor="reward">Coins as a reward</label> */}
             <input
               id="reward"
               type="text"
               name="reward"
               value={changedTask.reward || 0}
               onChange={onChangeNumberInput}
+              style={{ width: "10vw" }}
             />
             <input
               type="submit"
               value="Save changes"
               className="btn btn-primary"
             />
-            <button
+            <Button
               type="button"
               className="btn"
               onClick={() => setEditMode(false)}
             >
               Cancel
-            </button>
-            <button className="btn" onClick={onDelete}>
+            </Button>
+            <Button className="btn" onClick={onDelete}>
               <i className="fas fa-trash"></i>
-            </button>
-          </form>
+            </Button>
+          </ContainerRow>
+        </form>
+      </Fragment>
+    );
+  }
+
+  if (task.isDone) {
+    return (
+      <Fragment>
+        <Card>
+          <ContainerRow style={{ marginRight: "auto" }}>
+            <Button onClick={onUndo}>
+              <i
+                className="far fa-check-square"
+                style={{ color: "lightgray" }}
+              ></i>
+            </Button>
+            <H4
+              className="text-primary text-left"
+              style={{ textDecoration: "line-through", color: "lightgray" }}
+            >
+              {name}
+            </H4>
+          </ContainerRow>
         </Card>
+        <HR />
       </Fragment>
     );
   }

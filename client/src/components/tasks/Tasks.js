@@ -7,18 +7,19 @@ const Tasks = () => {
 
   const { tasks } = taskContext;
 
-  if (tasks.length === 0) {
+  const unfinishedTasksArray = tasks.filter((task) => task.isDone === false);
+
+  if (unfinishedTasksArray.length === 0) {
     return (
-      <h4 className="text-center my-3">
-        No tasks? Go ahead and add your first task.
-      </h4>
+      <h4 className="text-center my-3">No tasks? Go ahead and add a task.</h4>
     );
   }
 
   return (
     <Fragment>
       {tasks.map((task) => {
-        return <TaskItem task={task} key={task.id}></TaskItem>;
+        if (!task.isDone)
+          return <TaskItem task={task} key={task.id}></TaskItem>;
       })}
     </Fragment>
   );
