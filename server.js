@@ -22,7 +22,8 @@ app.use("/api/auth", require("./routes/auth"));
 app.use("/api/tasks", require("./routes/tasks"));
 
 // in dev we will use :5000 and in prod, something else thats deefined in the env
-const PORT = process.env.PORT || 5000;
+// it was const PORT = process.env.PORT || 5000;
+const PORT = 5000;
 
 app.listen(PORT, () =>
   console.log(`Guess what, Server started on port ${PORT}`)

@@ -7,8 +7,7 @@
     "start": "node server.js",
     "server": "nodemon server.js",
     "client": "npm start --prefix client",
-    "clientinstall": "npm install --prefix client",
-    "dev": "concurrently \"npm run server\" \"npm run client\""
+    "clientinstall": "npm install --prefix client"
   },
   "keywords": [],
   "author": "",
@@ -19,11 +18,11 @@
     "express": "^4.17.1",
     "express-validator": "^6.4.0",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.9.9",
+    "mongoose": "^5.9.10",
     "styled-components": "^5.1.0"
   },
   "devDependencies": {
-    "concurrently": "^5.1.0",
+    "kill-port": "^1.6.0",
     "nodemon": "^2.0.3"
   }
 }

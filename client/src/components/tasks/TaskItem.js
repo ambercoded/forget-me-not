@@ -119,6 +119,9 @@ const TaskItem = ({ originalTask }) => {
               {name}
             </H4>
           </ContainerRow>
+          <div style={{ marginLeft: "auto" }}>
+            <Chip>+ {reward} coins</Chip>
+          </div>
         </Card>
         <HR />
       </>
@@ -127,7 +130,7 @@ const TaskItem = ({ originalTask }) => {
 
   return (
     <>
-      <Card>
+      <Card onDoubleClick={() => setEditMode(true)}>
         <ContainerRow style={{ marginRight: "auto" }}>
           <Button onClick={markAsDone}>
             <i className="far fa-square"></i>
