@@ -19,6 +19,13 @@ const TaskItem = ({ originalTask }) => {
     };
   }, [task]);
 
+  useEffect(() => {
+    document.addEventListener("keydown", cancelEditModeOnEsc, false);
+    return () => {
+      document.removeEventListener("keydown", cancelEditModeOnEsc, false);
+    };
+  }, []);
+
   const onDelete = (e) => {
     deleteTask(id);
   };
@@ -45,6 +52,12 @@ const TaskItem = ({ originalTask }) => {
     e.preventDefault();
     setEditMode(false);
     setTask(draftTask);
+  };
+
+  const cancelEditModeOnEsc = (e) => {
+    if (e.keyCode === 27) {
+      setEditMode(false);
+    }
   };
 
   const markAsDone = (e) => {
@@ -120,7 +133,9 @@ const TaskItem = ({ originalTask }) => {
             </H4>
           </ContainerRow>
           <div style={{ marginLeft: "auto" }}>
-            <Chip>+ {reward} coins</Chip>
+            <p style={{ color: "lightgray", fontSize: "14px" }}>
+              <em>Adrian received {reward} coins</em>
+            </p>
           </div>
         </Card>
         <HR />
@@ -138,7 +153,7 @@ const TaskItem = ({ originalTask }) => {
           <H4 className="text-primary text-left">{name}</H4>
         </ContainerRow>
         <div style={{ marginLeft: "auto" }}>
-          <Chip>+ {reward} coins</Chip>
+          <Chip background="limegreen">+ {reward} coins</Chip>
           <Button onClick={() => setEditMode(true)}>
             <i className="fas fa-pen"></i>
           </Button>
