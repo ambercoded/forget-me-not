@@ -91,11 +91,11 @@ img {
 }
 
 /* Cards */
-.card {
+/* .card {
   padding: 1rem;
   border: #ccc 1px dotted;
   margin: 0.7rem 0;
-}
+} */
 
 /* List */
 .list {
@@ -182,7 +182,7 @@ img {
   grid-template-columns: 2fr 3fr;
   grid-gap: 2rem;
 }
-
+/* 
 .btn {
   display: inline-block;
   background: var(--light-color);
@@ -194,7 +194,7 @@ img {
   margin-right: 0.5rem;
   transition: opacity 0.2s ease-in;
   outline: none;
-}
+} */
 
 .btn-link {
   background: none;
@@ -294,9 +294,9 @@ img {
 }
 
 /* Forms */
-input {
+/* input {
   margin: 1.2rem 0;
-}
+} */
 
 .form-text {
   display: block;
@@ -304,7 +304,7 @@ input {
   color: #888;
 }
 
-input[type="text"],
+/* input[type="text"],
 input[type="email"],
 input[type="password"],
 input[type="date"],
@@ -315,12 +315,7 @@ textarea {
   padding: 0.4rem;
   font-size: 1.2rem;
   border: 1px solid #ccc;
-}
-
-input[type="submit"],
-button {
-  font: inherit;
-}
+} */
 
 .form-group {
   margin: 1.2rem 0;

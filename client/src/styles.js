@@ -24,16 +24,19 @@ export const ContainerRow = styled.div`
 
 export const Button = styled.button`
   padding: 8px;
-  width: 48px;
-  height: 48px;
+  min-height: 48px;
+  max-width: 400px;
   border-radius: 8px;
-  background: transparent;
+  background: ${(props) => props.background};
+  color: ${(props) => props.color};
   border: none;
-  flex-shrink: 0;
-  &:hover {
-    background: lightblue;
-  }
+  font: inherit;
 `;
+
+Button.defaultProps = {
+  background: "transparent",
+  color: "black",
+};
 
 export const H4 = styled.h4`
   margin: 8px;
@@ -48,4 +51,17 @@ export const H2 = styled.h2`
 
 export const HR = styled.hr`
   border: 0.5px solid lightgray;
+`;
+
+export const TextInput = styled.input`
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+
+  height: 50px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  padding: 0.4rem;
+  background: white;
+  border-radius: 4px;
 `;

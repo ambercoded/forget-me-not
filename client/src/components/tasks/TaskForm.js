@@ -1,6 +1,6 @@
 import React, { useState, useContext } from "react";
 import TaskContext from "../../context/task/taskContext";
-import { ContainerRow } from "../../styles";
+import { ContainerRow, Button, TextInput } from "../../styles";
 
 const TaskForm = () => {
   const taskContext = useContext(TaskContext);
@@ -36,30 +36,38 @@ const TaskForm = () => {
 
   return (
     <form onSubmit={onSubmit}>
-      <ContainerRow>
-        <input
+      <ContainerRow style={{ flexWrap: "wrap", flex: 1 }}>
+        <TextInput
           id="taskname"
           type="text"
           placeholder="What needs to be done?"
           name="name"
           value={name}
           onChange={onChange}
+          style={{ display: "inline-block", minWidth: "300px", flex: 5 }}
         />
-        <input
+        <TextInput
           id="reward"
           type="text"
           placeholder="number of coins as a reward (e.g. 30)"
           name="reward"
           value={reward || 0}
           onChange={onChangeNumberInput}
-          style={{ width: "10vw" }}
+          style={{
+            minWidth: "75px",
+            display: "inline-block",
+            flex: 1,
+          }}
         />
         <div>
-          <input
+          <Button
             type="submit"
-            value="Add Task"
-            className="btn btn-primary btn-block"
-          />
+            background="blue"
+            color="white"
+            style={{ flex: 2 }}
+          >
+            Add Task
+          </Button>
         </div>
       </ContainerRow>
     </form>

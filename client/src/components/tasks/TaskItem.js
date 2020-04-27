@@ -2,7 +2,7 @@ import React, { useContext, useState, useEffect } from "react";
 import PropTypes from "prop-types";
 import TaskContext from "../../context/task/taskContext";
 import RewardsContext from "../../context/rewards/rewardsContext";
-import { Card, ContainerRow, Button, H4, Chip, HR } from "../../styles";
+import { Card, ContainerRow, Button, Chip, HR, TextInput } from "../../styles";
 
 const TaskItem = ({ originalTask }) => {
   const [task, setTask] = useState(originalTask);
@@ -73,33 +73,45 @@ const TaskItem = ({ originalTask }) => {
     return (
       <>
         <form onSubmit={onSaveChanges}>
+          <ContainerRow style={{ flex: 1, flexWrap: "wrap" }}>
+            <span>
+              <label htmlFor="taskName">Task name</label>
+              <TextInput
+                id="taskName"
+                type="text"
+                name="name"
+                value={draftTask.name}
+                style={{ minWidth: "300px", display: "block" }}
+                onChange={onChange}
+              />
+            </span>
+            <span>
+              <label htmlFor="reward">Coins as a reward</label>
+              <TextInput
+                id="reward"
+                type="text"
+                name="reward"
+                value={draftTask.reward || 0}
+                onChange={onChangeNumberInput}
+                style={{ width: "125px", display: "block" }}
+              />
+            </span>
+          </ContainerRow>
           <ContainerRow>
-            {/* <label htmlFor="taskName">Task name</label> */}
-            <input
-              id="taskName"
-              type="text"
-              name="name"
-              value={draftTask.name}
-              onChange={onChange}
-            />
-            {/* <label htmlFor="reward">Coins as a reward</label> */}
-            <input
-              id="reward"
-              type="text"
-              name="reward"
-              value={draftTask.reward || 0}
-              onChange={onChangeNumberInput}
-              style={{ width: "10vw" }}
-            />
-            <input
+            <Button
               type="submit"
-              value="Save changes"
-              className="btn btn-primary"
-            />
+              value="Add Task"
+              className="btn btn-primary btn-block"
+              background="blue"
+              color="white"
+            >
+              Save changes
+            </Button>
             <Button
               type="button"
               className="btn"
               onClick={() => setEditMode(false)}
+              background="transparent"
             >
               Cancel
             </Button>
