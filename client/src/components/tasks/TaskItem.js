@@ -72,7 +72,7 @@ const TaskItem = ({ originalTask }) => {
   if (editMode) {
     return (
       <>
-        <form onSubmit={onSaveChanges}>
+        <form onSubmit={onSaveChanges} style={{ margin: "2rem 0" }}>
           <ContainerRow style={{ flex: 1, flexWrap: "wrap" }}>
             <span>
               <label htmlFor="taskName">Task name</label>

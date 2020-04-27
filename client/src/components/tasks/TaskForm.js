@@ -35,7 +35,7 @@ const TaskForm = () => {
   };
 
   return (
-    <form onSubmit={onSubmit}>
+    <form onSubmit={onSubmit} style={{ marginBottom: "2rem" }}>
       <ContainerRow style={{ flexWrap: "wrap", flex: 1 }}>
         <TextInput
           id="taskname"
