@@ -35,7 +35,7 @@ Navbar.propTypes = {
 };
 
 Navbar.defaultProps = {
-  title: "Forget-Me-Not",
+  title: "The Todo Game",
   icon: "far fa-gem",
 };
 

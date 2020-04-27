@@ -14,9 +14,7 @@ const TaskItem = ({ originalTask }) => {
 
   useEffect(() => {
     updateTask(task);
-    return () => {
-      // cleanup necessary?
-    };
+    // eslint-disable-next-line
   }, [task]);
 
   useEffect(() => {
@@ -118,19 +116,25 @@ const TaskItem = ({ originalTask }) => {
     return (
       <>
         <Card>
-          <ContainerRow style={{ marginRight: "auto" }}>
+          <ContainerRow
+            style={{ minWidth: "auto", maxWidth: "600px", marginRight: "auto" }}
+          >
             <Button onClick={markAsUndone}>
               <i
                 className="far fa-check-square"
                 style={{ color: "lightgray" }}
               ></i>
             </Button>
-            <H4
+            <p
               className="text-primary text-left"
-              style={{ textDecoration: "line-through", color: "lightgray" }}
+              style={{
+                textDecoration: "line-through",
+                color: "lightgray",
+                paddingTop: "10px",
+              }}
             >
               {name}
-            </H4>
+            </p>
           </ContainerRow>
           <div style={{ marginLeft: "auto" }}>
             <p style={{ color: "lightgray", fontSize: "14px" }}>
@@ -146,13 +150,26 @@ const TaskItem = ({ originalTask }) => {
   return (
     <>
       <Card onDoubleClick={() => setEditMode(true)}>
-        <ContainerRow style={{ marginRight: "auto" }}>
+        <ContainerRow
+          style={{
+            minWidth: "auto",
+            maxWidth: "600px",
+            marginRight: "auto",
+          }}
+        >
           <Button onClick={markAsDone}>
             <i className="far fa-square"></i>
           </Button>
-          <H4 className="text-primary text-left">{name}</H4>
+          <p
+            className="text-primary text-left"
+            style={{ display: "inline-block", paddingTop: "10px" }}
+          >
+            {name}
+          </p>
         </ContainerRow>
-        <div style={{ marginLeft: "auto" }}>
+        <div
+          style={{ minWidth: "auto", maxWidth: "600px", marginLeft: "auto" }}
+        >
           <Chip background="limegreen">+ {reward} coins</Chip>
           <Button onClick={() => setEditMode(true)}>
             <i className="fas fa-pen"></i>

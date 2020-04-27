@@ -25,9 +25,8 @@ const TasksCompleted = () => {
   return (
     <Fragment>
       <H2>Completed Tasks</H2>
-      {tasks.map((task) => {
-        if (task.isDone)
-          return <TaskItem originalTask={task} key={task.id}></TaskItem>;
+      {finishedTasksArray.map((task) => {
+        return <TaskItem originalTask={task} key={task.id}></TaskItem>;
       })}
     </Fragment>
   );

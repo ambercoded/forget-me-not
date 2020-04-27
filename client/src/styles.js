@@ -2,6 +2,7 @@ import styled from "styled-components";
 
 export const Card = styled.div`
   display: flex;
+  flex-wrap: wrap;
   flex-direction: row;
   margin: 8px 0px;
   border-radius: 8px;
@@ -28,6 +29,7 @@ export const Button = styled.button`
   border-radius: 8px;
   background: transparent;
   border: none;
+  flex-shrink: 0;
   &:hover {
     background: lightblue;
   }

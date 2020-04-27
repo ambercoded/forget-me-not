@@ -17,9 +17,8 @@ const Tasks = () => {
 
   return (
     <Fragment>
-      {tasks.map((task) => {
-        if (!task.isDone)
-          return <TaskItem originalTask={task} key={task.id}></TaskItem>;
+      {unfinishedTasksArray.map((task) => {
+        return <TaskItem originalTask={task} key={task.id}></TaskItem>;
       })}
     </Fragment>
   );
