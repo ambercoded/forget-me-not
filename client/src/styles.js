@@ -62,6 +62,7 @@ export const TextInput = styled.input`
   font-size: 1rem;
   border: 1px solid #ccc;
   padding: 0.4rem;
+  margin-bottom: 1rem;
   background: white;
   border-radius: 4px;
 `;
