@@ -19,10 +19,10 @@ const Navbar = ({ title, icon }) => {
           <Link to="/">Tasks</Link>
         </li>
         <li>
-          <Link to="/shopping-list">Shopping List</Link>
+          <Link to="/shopping-list">Shopping</Link>
         </li>
         <li>
-          <Link to="/rewards">Rewards ({coins} coins)</Link>
+          <Link to="/rewards">({coins} coins)</Link>
         </li>
       </ul>
     </div>
