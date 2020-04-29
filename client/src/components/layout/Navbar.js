@@ -24,6 +24,12 @@ const Navbar = ({ title, icon }) => {
         <li>
           <Link to="/rewards">({coins} coins)</Link>
         </li>
+        <li>
+          <Link to="/register">Register</Link>
+        </li>
+        <li>
+          <Link to="/login">Login</Link>
+        </li>
       </ul>
     </div>
   );
